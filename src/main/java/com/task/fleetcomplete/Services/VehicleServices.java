@@ -24,7 +24,8 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class VehicleServices {
 
-    private int difference = 0;
+    private int hoursDifference = 0;
+    private int daysDifference = 0;
     private String lastUpdate = "";
     private final String pattern = "yyyy-MM-dd hh:mm:ss";
     private final Date now = new Date();
@@ -41,19 +42,26 @@ public class VehicleServices {
             List<VehicleProcessedData> processedVehiclesData = new ArrayList<>();
             vehiclesPosition.forEach(getVehicleData -> {
                 try {
-                    difference = (int)TimeUnit.HOURS.convert(now.getTime() -
+                    hoursDifference = (int)TimeUnit.HOURS.convert(now.getTime() -
+                            dateFormat.parse(getVehicleData.getLastEngineOnTime()).getTime(), TimeUnit.MILLISECONDS);
+                    daysDifference = (int)TimeUnit.DAYS.convert(now.getTime() -
                             dateFormat.parse(getVehicleData.getLastEngineOnTime()).getTime(), TimeUnit.MILLISECONDS);
 
-                    if (difference < 24) {
-                        lastUpdate = "Last updated " + difference + " hours ago.";
-                    }
-                    if (difference > 24) {
-                        lastUpdate = getVehicleData.getLastEngineOnTime();
-                    }
                     if (getVehicleData.getEnginestate() == 1) {
                         lastUpdate = "On the way";
                     }
-                    System.out.println(lastUpdate);
+                    else if(daysDifference > 1 && daysDifference <= 6) {
+                        lastUpdate = "Last updated "+daysDifference+ " days ago.";
+                    }
+                    else if(daysDifference == 1) {
+                        lastUpdate = "Last updated "+daysDifference+ " day ago.";
+                    }
+                    else if(hoursDifference < 24) {
+                        lastUpdate = hoursDifference + " hours ago.";
+                    }
+                    else {
+                        lastUpdate = getVehicleData.getLastEngineOnTime();
+                    }
                     processedVehiclesData.add(new VehicleProcessedData(getVehicleData.getPlate(),
                             getVehicleData.getSpeed() == null ? 0 : getVehicleData.getSpeed(), getVehicleData.getObjectId(),
                             getVehicleData.getAddress(), lastUpdate, getVehicleData.getLatitude(), getVehicleData.getLongitude()));
