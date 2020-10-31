@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class VehicleServices {
 
-    private long difference = 0;
+    private int difference = 0;
     private String lastUpdate = "";
     private final String pattern = "yyyy-MM-dd hh:mm:ss";
     private final Date now = new Date();
@@ -41,23 +41,24 @@ public class VehicleServices {
             List<VehicleProcessedData> processedVehiclesData = new ArrayList<>();
             vehiclesPosition.forEach(getVehicleData -> {
                 try {
-                    difference = TimeUnit.HOURS.convert(now.getTime() -
+                    difference = (int)TimeUnit.HOURS.convert(now.getTime() -
                             dateFormat.parse(getVehicleData.getLastEngineOnTime()).getTime(), TimeUnit.MILLISECONDS);
 
                     if (difference < 24) {
                         lastUpdate = "Last updated " + difference + " hours ago.";
                     }
+                    if (difference > 24) {
+                        lastUpdate = getVehicleData.getLastEngineOnTime();
+                    }
                     if (getVehicleData.getEnginestate() == 1) {
                         lastUpdate = "On the way";
                     }
-                    if (difference > 24) {
-                        lastUpdate = String.valueOf(getVehicleData.getEnginestate());
-                    }
+                    System.out.println(lastUpdate);
                     processedVehiclesData.add(new VehicleProcessedData(getVehicleData.getPlate(),
                             getVehicleData.getSpeed() == null ? 0 : getVehicleData.getSpeed(), getVehicleData.getObjectId(),
                             getVehicleData.getAddress(), lastUpdate, getVehicleData.getLatitude(), getVehicleData.getLongitude()));
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                } catch (ParseException parseException) {
+                    logger.error(parseException.getMessage());
                 }
             });
             return new ResponseEntity<>(processedVehiclesData, HttpStatus.OK);
