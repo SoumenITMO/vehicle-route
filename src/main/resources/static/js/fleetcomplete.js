@@ -135,7 +135,6 @@ function getvehicles() {
   	      if(vechicles.length > 0)
   	      {
   	      	  $(".loading").show();
-  	      	  console.log(vechicles);
 			  map = new google.maps.Map(document.getElementById("map"), {
 				  zoom: 8,
 				  center: { lat: vechicles[0].lat, lng: vechicles[0].lng },
