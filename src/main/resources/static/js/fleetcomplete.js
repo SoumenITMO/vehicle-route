@@ -45,6 +45,7 @@ function showRoute(objectid, startdate, enddate) {
 				mapdata(vechicalroutedata);
 			}
 			else {
+				$(".loading").hide();
 				$(".error-section-vehicle-history").fadeIn(200).fadeOut(5000);
 			}
 		}
@@ -162,7 +163,8 @@ function getvehicles() {
 		  }
   	      else
   	      	{
-  	      	$(".error-section-vehicles").fadeIn(200).fadeOut(5000);
+				$(".loading").hide();
+  	      		$(".error-section-vehicles").fadeIn(200).fadeOut(5000);
 		  }
 	  }
   });
