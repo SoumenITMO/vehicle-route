@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -83,8 +84,8 @@ public class VehicleServices {
         int stops = 0;
         int totalDistance = 0;
         int totalStopsDistance = 0;
-        boolean stopFlag = false;
         int lastDistance = 0;
+        boolean stopFlag = false;
 
         try {
             List<VehicleRoute> vehicleRoutesData = helperMethods.getVehicleRoute(apiKey, objectId, startDate, endDate);
@@ -114,6 +115,12 @@ public class VehicleServices {
         } catch (HttpClientErrorException httpException) {
             logger.error("Http Exception Happend.");
             return new ResponseEntity<>(new APIError(101), HttpStatus.OK);
+        } catch (HttpServerErrorException httpServerErrorException) {
+            logger.error("Exception happend in server.");
+            return new ResponseEntity<>(new APIError(102), HttpStatus.OK);
+        } catch (NullPointerException nullPointerException) {
+            logger.error("Nullpointer exception happend.");
+            return new ResponseEntity<>(new APIError(103), HttpStatus.OK);
         }
     }
 }

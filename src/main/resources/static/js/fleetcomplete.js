@@ -7,7 +7,7 @@ $(document).ready(function() {
   $(".car-list").hide();
   $(".cars").on("click", "tr", function() {
 	 objectid = $(this).attr("object-id");
-	 $(".cars tr").css("color","white");
+	 $(".cars tr").css("color","white").css("font-weight",200);
 	 $(this).css("color","red").css("font-weight",500);
 	 $(".route-search-box").show();
 	 $(".car-route-section").show();
