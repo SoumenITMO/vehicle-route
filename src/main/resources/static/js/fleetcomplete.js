@@ -36,6 +36,7 @@ function showRoute(objectid, startdate, enddate) {
   url: "getvehicleroute/"+key+"/"+objectid+"/"+startdate+"/"+enddate,
 	  success : function( vechicalroutedata ) 
 	  {
+	  	console.log(vechicalroutedata);
 	  	if(vechicalroutedata.statusCode != undefined) {
 	  		$(".loading").hide();
 			$(".error-section-vehicle-history").fadeIn(200).fadeOut(5000);
