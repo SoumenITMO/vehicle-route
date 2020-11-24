@@ -1,14 +1,24 @@
 package com.task.fleetcomplete.Dto.VehicleData;
 
+import javax.validation.constraints.NotNull;
+
 public class Vehicles {
 
+    @NotNull
     private float latitude;
+    @NotNull
     private float longitude;
+    @NotNull
     private Integer speed;
+    @NotNull
     private Integer enginestate;
+    @NotNull
     private String lastEngineOnTime;
+    @NotNull
     private Integer objectId;
+    @NotNull
     private String address;
+    @NotNull
     private String plate;
 
     public float getLatitude() {

@@ -1,17 +1,23 @@
 package com.task.fleetcomplete.Dto.VehicleData;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.validation.constraints.NotNull;
 
 public class VehicleRoute {
 
+    @NotNull
     @JsonProperty("Speed")
     private Integer speed;
+    @NotNull
     @JsonProperty("Distance")
     private Integer distance;
+    @NotNull
     @JsonProperty("EngineStatus")
     private Integer engineStatus;
+    @NotNull
     @JsonProperty("Longitude")
     private Float longitude;
+    @NotNull
     @JsonProperty("Latitude")
     private Float latitude;
 

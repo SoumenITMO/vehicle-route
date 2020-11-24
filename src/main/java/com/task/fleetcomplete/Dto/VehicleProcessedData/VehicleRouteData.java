@@ -18,6 +18,9 @@ public class VehicleRouteData {
         this.vechicalroutepoints = vechicalroutepoints;
     }
 
+    public VehicleRouteData() {
+    }
+
     public float getTotalDistance() {
         return totalDistance;
     }

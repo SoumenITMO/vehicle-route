@@ -3,7 +3,7 @@ package com.task.fleetcomplete.Dto.VehicleData;
 import java.util.List;
 
 public class VehicleLastestDataResponse {
-
+    
     private List<Vehicles> response;
 
     public List<Vehicles> getResponse() {

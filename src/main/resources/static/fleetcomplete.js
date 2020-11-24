@@ -23,7 +23,7 @@ $(document).ready(function() {
   $("#datepicker").val("");
 });
 
-function getVehicleRoute() {
+function getVehicleRoute1() {
 	showRoute(objectid, startdate, enddate);
 }
 
@@ -31,12 +31,15 @@ function showRoute(objectid, startdate, enddate) {
 
   $(".loading").show();
   $.ajax({
-  type: "GET",
-  headers: {  'Access-Control-Allow-Origin': '*' },
-  url: "getvehicleroute/"+key+"/"+objectid+"/"+startdate+"/"+enddate,
+  type: "POST",
+  dataType: 'json',
+  data: {"startDate":startdate,"endDate":enddate,"objectId":objectid,"apiKey":key},
+  headers: { 'Accept': 'application/json' },
+  url: "/vehicleroutes",
 	  success : function( vechicalroutedata ) 
 	  {
-	  	if(vechicalroutedata.statusCode != undefined) {
+	  	console.log(vechicalroutedata);
+	  	/*if(vechicalroutedata.statusCode != undefined) {
 	  		$(".loading").hide();
 			$(".error-section-vehicle-history").fadeIn(200).fadeOut(5000);
 		}
@@ -44,11 +47,12 @@ function showRoute(objectid, startdate, enddate) {
 			if(vechicalroutedata.vechicalroutepoints.length !== 0) {
 				mapdata(vechicalroutedata);
 			}
+
 			else {
 				$(".loading").hide();
 				$(".error-section-vehicle-history").fadeIn(200).fadeOut(5000);
 			}
-		}
+		}*/
 	  }
   });
 }
